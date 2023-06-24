@@ -21,9 +21,9 @@ public class ReservaEntity {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "usuario_id", nullable = false)
-    private UsuarioEntity usuarioEntity;
+    private UsuarioEntity usuario;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "vuelo_id", nullable = false)
-    private VueloEntity vueloEntity;
+    private VueloEntity vuelo;
 }

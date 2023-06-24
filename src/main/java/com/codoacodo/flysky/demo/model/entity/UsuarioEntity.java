@@ -22,5 +22,5 @@ public class UsuarioEntity {
     private TipoUsuario tipoUsuario;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<ReservaEntity> reservaEntities;
+    private List<ReservaEntity> reserva;
 }

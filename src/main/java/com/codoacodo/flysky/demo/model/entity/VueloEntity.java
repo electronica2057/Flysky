@@ -18,5 +18,5 @@ public class VueloEntity {
     private Long id;
 
     @OneToMany(mappedBy = "vuelo", cascade = CascadeType.ALL)
-    private List<ReservaEntity> reservaEntities;
+    private List<ReservaEntity> reserva;
 }
