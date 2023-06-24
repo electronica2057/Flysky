@@ -1,6 +1,6 @@
 package com.codoacodo.flysky.demo.model.entity;
 
-import com.desafiofinal.flysky.model.enums.TipoUsuario;
+import com.codoacodo.flysky.demo.model.enums.TipoUsuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
