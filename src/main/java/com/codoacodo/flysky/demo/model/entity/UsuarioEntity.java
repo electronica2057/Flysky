@@ -21,6 +21,9 @@ public class UsuarioEntity {
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipoUsuario;
 
+    private String nombreUsuario;
+    private Integer telefono;
+
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<ReservaEntity> reserva;
 }
