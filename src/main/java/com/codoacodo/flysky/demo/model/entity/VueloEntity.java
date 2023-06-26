@@ -1,5 +1,6 @@
 package com.codoacodo.flysky.demo.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,10 +20,13 @@ public class VueloEntity {
     private Long id;
 
     @OneToMany(mappedBy = "vuelo", cascade = CascadeType.ALL)
-    private List<ReservaEntity> reserva;
+    @JsonManagedReference
+    private List<ReservaEntity> reservas;
 
     @OneToMany(mappedBy = "vuelo", cascade = CascadeType.ALL)
-    private List<ButacaEntity> butacaList;
+    @JsonManagedReference
+    private List<ButacaEntity> butacas;
+
     private Boolean disponible = false;
     private Integer capacidad;
     private String aerolinea;

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/v1/")
+@RequestMapping("api/v1/vuelos")
 public class VueloController {
     private final VueloService vueloService;
 
@@ -16,7 +16,7 @@ public class VueloController {
         this.vueloService = vueloService;
     }
 
-    @GetMapping("vuelosDisponibles")
+    @GetMapping("disponibles")
     public ResponseEntity<?> verListaDeVuelosDisponibles() {
         return new ResponseEntity<>(vueloService.obtenerVuelosDisponibles(), HttpStatus.OK);
     }
