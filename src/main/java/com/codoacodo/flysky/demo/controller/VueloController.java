@@ -16,7 +16,7 @@ public class VueloController {
         this.vueloService = vueloService;
     }
 
-    @GetMapping("disponibles")
+    @GetMapping("/disponibles")
     public ResponseEntity<?> verListaDeVuelosDisponibles() {
         return new ResponseEntity<>(vueloService.obtenerVuelosDisponibles(), HttpStatus.OK);
     }
