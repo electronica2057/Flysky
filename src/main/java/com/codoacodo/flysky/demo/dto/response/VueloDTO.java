@@ -2,6 +2,7 @@ package com.codoacodo.flysky.demo.dto.response;
 
 import com.codoacodo.flysky.demo.model.entity.ButacaEntity;
 import com.codoacodo.flysky.demo.model.entity.ReservaEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ public class VueloDTO {
 
 
 
-
+@JsonIgnore
         private List<ReservaDTO> reservas;
 
 
