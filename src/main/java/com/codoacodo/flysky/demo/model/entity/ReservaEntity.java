@@ -22,6 +22,10 @@ public class ReservaEntity {
     @Enumerated(EnumType.STRING)
     private TipoPago tipoPago;
 
+    private double montoPagar;
+    private LocalDateTime fechaReserva;
+
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "usuario_id", nullable = false)
     @JsonBackReference
