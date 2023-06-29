@@ -23,8 +23,8 @@ public class ReservaEntity {
     private TipoPago tipoPago;
 
     private double montoPagar;
-    private LocalDateTime fechaReserva;
 
+    private LocalDateTime fechaReserva;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "usuario_id", nullable = false)
@@ -35,5 +35,4 @@ public class ReservaEntity {
     @JoinColumn(name = "vuelo_id", nullable = false)
     @JsonBackReference
     private VueloEntity vuelo;
-
 }

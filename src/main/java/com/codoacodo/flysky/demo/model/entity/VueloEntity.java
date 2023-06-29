@@ -28,11 +28,18 @@ public class VueloEntity {
     private List<ButacaEntity> butacas;
 
     private Boolean disponible = false;
+
     private Integer capacidad;
+
     private String aerolinea;
+
     private LocalDateTime horarioPartida;
+
     private LocalDateTime horarioLlegada;
+
     private Double precio;
+
     private String origen;
+
     private String destino;
 }
