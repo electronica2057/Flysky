@@ -6,6 +6,7 @@ import com.codoacodo.flysky.demo.model.enums.TipoPago;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,20 +41,11 @@ public class IntegrationTest {
 
     @Test
     public void testReservas() throws Exception {
-
-        TipoPago tipoPago1 = TipoPago.TARJETA_CREDITO;
-        TipoPago tipoPago2 = TipoPago.TRANSFERENCIA_BANCARIA;
-        TipoPago tipoPago3 = TipoPago.EFECTIVO;
-        LocalDateTime fecha1 = LocalDateTime.of(2023, 6, 23, 23, 53,30);
-        LocalDateTime fecha2 = LocalDateTime.of(2023, 6, 29, 18, 33,20);
-        LocalDateTime fecha3 = LocalDateTime.of(2023, 6, 29, 18, 33,20);
-        System.out.println("fecha3 = " + fecha3);
         List<ReservaDTO> reservas = new ArrayList<>();
 
-
-        ReservaDTO testPostDto= new ReservaDTO(tipoPago1,1500.00, fecha1,null,null);
-        ReservaDTO testPostDto2= new ReservaDTO(tipoPago2,2000.00, null,null,null);
-        ReservaDTO testPostDto3= new ReservaDTO(tipoPago3,3000.00, null,null,null);
+        ReservaDTO testPostDto= new ReservaDTO(TipoPago.TARJETA_CREDITO,1500.00, LocalDateTime.of(2023, 6, 25, 23, 53,30),null,null);
+        ReservaDTO testPostDto2= new ReservaDTO(TipoPago.TRANSFERENCIA_BANCARIA,2000.00, LocalDateTime.of(2023, 6, 29, 18, 33,20),null,null);
+        ReservaDTO testPostDto3= new ReservaDTO(TipoPago.EFECTIVO,3000.00, LocalDateTime.of(2023, 6, 29, 18, 33,20),null,null);
 
         reservas.add(testPostDto);
         reservas.add(testPostDto2);
@@ -61,10 +53,10 @@ public class IntegrationTest {
 
         BusquedaUsuarioDTO responseDto = new BusquedaUsuarioDTO("Carlos","Miguel");
 
-        ObjectWriter writer = new ObjectMapper()
-                .configure(SerializationFeature.WRAP_ROOT_VALUE,false)
-                .writer();
-;
+        ObjectMapper writer = new ObjectMapper()
+                .registerModule(new JavaTimeModule())
+                .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+
         String jsonPayload = writer.writeValueAsString(responseDto);
         System.out.println("reservas = " + reservas);
         String responseJson = writer.writeValueAsString(reservas);
