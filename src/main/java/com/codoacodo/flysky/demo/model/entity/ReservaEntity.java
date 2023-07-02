@@ -35,4 +35,10 @@ public class ReservaEntity {
     @JoinColumn(name = "vuelo_id", nullable = false)
     @JsonBackReference
     private VueloEntity vuelo;
+
+
+   @PrePersist
+   public void prePersist() {
+       fechaReserva = LocalDateTime.now();
+   }
 }

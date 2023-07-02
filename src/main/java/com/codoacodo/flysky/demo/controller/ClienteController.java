@@ -1,11 +1,11 @@
 package com.codoacodo.flysky.demo.controller;
 
 import com.codoacodo.flysky.demo.dto.request.BusquedaUsuarioDTO;
+import com.codoacodo.flysky.demo.dto.request.ReservaRequestDTO;
 import com.codoacodo.flysky.demo.model.enums.TipoUsuario;
 import com.codoacodo.flysky.demo.service.ReservaService;
 import com.codoacodo.flysky.demo.service.UsuarioService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,5 +30,11 @@ public class ClienteController {
 
         return new ResponseEntity<>(reservaService.obtenerReservasPorNombreUsuario(busqueda.getNombreUsuario()), HttpStatus.OK);
     }
+
+    @PostMapping("/nuevaReserva")
+    public ResponseEntity<?> crearReserva(@RequestBody ReservaRequestDTO reservaDTO){
+        return new ResponseEntity<>(reservaService.crearReserva(reservaDTO),HttpStatus.OK);
+    }
+
 
 }

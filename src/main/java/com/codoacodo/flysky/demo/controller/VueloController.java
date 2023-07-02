@@ -22,4 +22,5 @@ public class VueloController {
         return new ResponseEntity<>(vueloService.obtenerVuelosDisponibles(), HttpStatus.OK);
     }
 
+
 }
