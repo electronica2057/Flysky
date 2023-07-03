@@ -20,6 +20,10 @@ public class VueloServiceImpl implements VueloService {
     public List<VueloDTO> obtenerVuelosDisponibles() {
         ModelMapper mapper = new ModelMapper();
         List<VueloEntity> entities = vueloRepository.findByDisponibleTrue();
+
+        if (entities.isEmpty()){
+            throw new RuntimeException("No hay vuelos disponibles");
+        }
         List<VueloDTO> dtos = entities.stream().map(entity-> mapper.map(entity, VueloDTO.class)).toList();
         return dtos;
     }

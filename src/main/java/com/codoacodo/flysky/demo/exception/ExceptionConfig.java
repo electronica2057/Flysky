@@ -12,4 +12,9 @@ public class ExceptionConfig {
         ErrorDTO errorDTO = new ErrorDTO(e.getMessage());
         return new ResponseEntity<>(errorDTO, HttpStatus.UNAUTHORIZED);
     }
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<?>entidadNoEncontrada(EntityNotFoundException e) {
+        ErrorDTO errorDTO = new ErrorDTO(e.getMessage());
+        return new ResponseEntity<>(errorDTO, HttpStatus.NOT_FOUND);
+    }
 }

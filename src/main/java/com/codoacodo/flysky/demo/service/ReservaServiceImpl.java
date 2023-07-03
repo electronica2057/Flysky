@@ -1,10 +1,14 @@
 package com.codoacodo.flysky.demo.service;
 
+import com.codoacodo.flysky.demo.dto.request.BusquedaUsuarioDTO;
 import com.codoacodo.flysky.demo.dto.request.ReservaRequestDTO;
 import com.codoacodo.flysky.demo.dto.response.ReservaDTO;
+import com.codoacodo.flysky.demo.exception.EntityNotFoundException;
+import com.codoacodo.flysky.demo.exception.UnauthorizedException;
 import com.codoacodo.flysky.demo.model.entity.ReservaEntity;
 import com.codoacodo.flysky.demo.model.entity.UsuarioEntity;
 import com.codoacodo.flysky.demo.model.entity.VueloEntity;
+import com.codoacodo.flysky.demo.model.enums.TipoUsuario;
 import com.codoacodo.flysky.demo.repository.ReservaRepository;
 import com.codoacodo.flysky.demo.repository.UsuarioRepository;
 import com.codoacodo.flysky.demo.repository.VueloRepository;
@@ -13,6 +17,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReservaServiceImpl implements ReservaService {
@@ -27,10 +32,29 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public List<ReservaDTO> obtenerReservasPorNombreUsuario(String nombreUsuario) {
+    public List<ReservaDTO> obtenerReservasPorNombreUsuario(BusquedaUsuarioDTO busquedaUsuarioDTO) {
+        Optional<UsuarioEntity> usuarioEntity = usuarioRepository.getByNombreUsuario(busquedaUsuarioDTO.getNombreAgente());
+
+        if (usuarioEntity.isEmpty()) {
+
+            throw new RuntimeException();
+        }
+        TipoUsuario tipoAgente = usuarioEntity.get().getTipoUsuario();
+
+        if (!tipoAgente.equals(TipoUsuario.AGENTE_DE_VENTAS)) {
+            throw new UnauthorizedException("El usuario no está autorizado para visualizar las reservas");
+
+        }
         ModelMapper mapper = new ModelMapper();
-        UsuarioEntity usuarioEntity = usuarioRepository.getByNombreUsuario(nombreUsuario);
-        List<ReservaEntity> reservaEntities = reservaRepository.getAllByUsuario(usuarioEntity);
+        Optional<UsuarioEntity> usuario = usuarioRepository.getByNombreUsuario(busquedaUsuarioDTO.getNombreUsuario());
+        if (usuario.isEmpty()){
+            throw new EntityNotFoundException("Usuario no encontrado");
+
+        }
+        List<ReservaEntity> reservaEntities = reservaRepository.getAllByUsuario(usuario.get());
+        if (reservaEntities.isEmpty()){
+            throw new EntityNotFoundException("Reserva no encontrada");
+        }
         List<ReservaDTO> reservaDTOS = reservaEntities.stream().map(reservaEntity -> mapper.map(reservaEntity, ReservaDTO.class)).toList();
         return reservaDTOS;
     }
