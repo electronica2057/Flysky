@@ -1,6 +1,5 @@
 package com.codoacodo.flysky.demo.controller;
 
-import com.codoacodo.flysky.demo.service.ReservaService;
 import com.codoacodo.flysky.demo.service.VueloService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class VueloController {
     private final VueloService vueloService;
 
-    public VueloController(VueloService vueloService, ReservaService reservaService) {
+    public VueloController(VueloService vueloService) {
         this.vueloService = vueloService;
     }
 
