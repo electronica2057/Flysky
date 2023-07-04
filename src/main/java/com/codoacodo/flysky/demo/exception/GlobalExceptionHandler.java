@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
-public class ExceptionConfig {
+public class GlobalExceptionHandler {
     @ExceptionHandler(UnauthorizedException.class)
     public ResponseEntity<?> usuarioNoAutorizado(UnauthorizedException e) {
         ErrorDTO errorDTO = new ErrorDTO(e.getMessage());
