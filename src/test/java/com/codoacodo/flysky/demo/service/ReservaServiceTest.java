@@ -1,4 +1,4 @@
-/*package com.codoacodo.flysky.demo.service;
+package com.codoacodo.flysky.demo.service;
 
 import com.codoacodo.flysky.demo.dto.response.ReservaDTO;
 import com.codoacodo.flysky.demo.model.enums.TipoPago;
@@ -26,7 +26,8 @@ public class ReservaServiceTest {
         ReservaDTO reservaDTO = new ReservaDTO(TipoPago.TARJETA_CREDITO, 1500.00, LocalDateTime.of(2023, 06, 25 , 23, 53 , 30 ), 1, 1);
         ReservaDTO expected = new ReservaDTO(TipoPago.TARJETA_CREDITO, 1500.00, LocalDateTime.of(2023, 06, 25 , 23, 53 , 30 ), 1, 1);
        //act
-        //ReservaDTO act = ReservaService.crearReserva(reservaDTO);
+        ReservaDTO act = ReservaService.crearReserva(reservaDTO);
+        //assert
+        assertEquals(expected,act);
     }
 }
-*/
