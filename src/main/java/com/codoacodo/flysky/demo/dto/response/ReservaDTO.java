@@ -19,7 +19,4 @@ public class ReservaDTO {
     private UsuarioDTO usuario;
     @JsonBackReference
     private VueloDTO vuelo;
-
-    public ReservaDTO(TipoPago tipoPago, double montoPagar, LocalDateTime of, int i, int i1) {
-    }
 }
