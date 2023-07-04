@@ -12,7 +12,6 @@ import com.codoacodo.flysky.demo.model.enums.TipoUsuario;
 import com.codoacodo.flysky.demo.repository.ReservaRepository;
 import com.codoacodo.flysky.demo.repository.UsuarioRepository;
 import com.codoacodo.flysky.demo.repository.VueloRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
