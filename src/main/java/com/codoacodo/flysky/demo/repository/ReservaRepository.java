@@ -10,5 +10,4 @@ import java.util.List;
 @Repository
 public interface ReservaRepository extends JpaRepository<ReservaEntity, Long> {
     List<ReservaEntity> getAllByUsuario(UsuarioEntity usuario);
-
 }
