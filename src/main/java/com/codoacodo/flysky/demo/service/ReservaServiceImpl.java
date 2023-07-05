@@ -1,5 +1,6 @@
 package com.codoacodo.flysky.demo.service;
 
+import com.codoacodo.flysky.demo.Util;
 import com.codoacodo.flysky.demo.dto.request.ReservaRequestDTO;
 import com.codoacodo.flysky.demo.dto.request.ReservaVueloDTO;
 import com.codoacodo.flysky.demo.dto.response.ReservaVueloResponseDto;
@@ -52,12 +53,11 @@ public class ReservaServiceImpl implements ReservaService {
         Optional<UsuarioEntity> usuario = usuarioRepository.getByNombreUsuario(nombreUsuarioTipoCliente);
 
         if (usuario.isPresent()) {
-            //if (usuario.get().getTipoUsuario().getDescripcion().equalsIgnoreCase("Cliente"))
+
             if (usuario.get().getTipoUsuario().equals(TipoUsuario.CLIENTE)) {
 
                 List<VueloEntity> vuelosDisponibles = vueloRepository.findByDisponibleTrue();
-                //si la disponibilidad de todos los registro de la tabla vuelo es false, la base de datos va a retornar
-                // una lista de vuelos vacía sin lanzar una excepción.
+
                 if (vuelosDisponibles.isEmpty()) {
                     throw new EntityNotFoundException("No hay vuelos disponibles en este momento. Intente más tarde.");
                 }
@@ -98,11 +98,9 @@ public class ReservaServiceImpl implements ReservaService {
                 }
 
                 //Modificamos por FALSE la disponibilidad de la butaca reservada.
-                //id de la butaca a reservar.
-                Long id = butacaVueloDisponibleReserva.get().getId();
 
                 ButacaEntity butacaPersitencia = new ButacaEntity();
-                butacaPersitencia.setId(id);
+                butacaPersitencia.setId(butacaVueloDisponibleReserva.get().getId(););
                 butacaPersitencia.setDisponible(Boolean.FALSE);
                 butacaPersitencia.setPosicion(butacaVueloDisponibleReserva.get().getPosicion());
                 butacaPersitencia.setVuelo(butacaVueloDisponibleReserva.get().getVuelo());
@@ -113,7 +111,6 @@ public class ReservaServiceImpl implements ReservaService {
                 List<ButacaEntity> butacasNoDisponibles = butacasVueloDisponibleReserva.stream()
                         .filter(butaca -> butaca.getDisponible().equals(Boolean.FALSE))
                         .toList();
-
 
                 if (butacasNoDisponibles.size() == vueloDisponibleReserva.get().getCapacidad()) {
 
@@ -131,16 +128,15 @@ public class ReservaServiceImpl implements ReservaService {
                     vueloRepository.save(vueloDisponibleReservaPersistencia);
                 }
 
-                Double montoPago = Util.montoAPagar(reservaVueloDTO.getTipoPago(), vueloDisponibleReserva.get().getPrecio());
-
                 ReservaEntity reservaEntityPersistencia = new ReservaEntity();
                 reservaEntityPersistencia.setTipoPago(reservaVueloDTO.getTipoPago());
-                reservaEntityPersistencia.setMontoPago(montoPago);
+                reservaEntityPersistencia.setMontoPago(Util.montoAPagar(reservaVueloDTO.getTipoPago(),
+                        vueloDisponibleReserva.get().getPrecio()));
                 reservaEntityPersistencia.setFechaReserva(LocalDate.now());
                 reservaEntityPersistencia.setUsuario(usuario.get());
                 reservaEntityPersistencia.setVuelo(vueloDisponibleReserva.get());
 
-                ReservaEntity reservaEntity = reservaRepository.save(reservaEntityPersistencia);
+                reservaRepository.save(reservaEntityPersistencia);
 
                 ReservaVueloResponseDto reservaVueloResponseDto = new ReservaVueloResponseDto();
                 reservaVueloResponseDto.setNombreUsuario(reservaEntityPersistencia.getUsuario().getNombreUsuario());
