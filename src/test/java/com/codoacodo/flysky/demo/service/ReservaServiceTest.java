@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ReservaServiceTest {
 
     @Autowired
-    ReservaService reservaService;
+    ReservaServiceTest reservaService;
 
     @Autowired
     ReservaRepository reservaRepository;
@@ -27,7 +27,7 @@ public class ReservaServiceTest {
     void obtenerReservasPorNombreUsuarioOkTest(){
         //arrange
         ReservaRequestDTO reservaRequestDTO = new ReservaRequestDTO(TipoPago.TARJETA_CREDITO, 1500.00, 1L, 1L);
-        ReservaDTO expected = new ReservaDTO(TipoPago.TARJETA_CREDITO, 1500.00, LocalDateTime.of(2023, 06, 25 , 23, 53 , 30 ), 1, 1);
+        ReservaDTO expected = new ReservaDTO(TipoPago.TARJETA_CREDITO, 1500.00, LocalDateTime.of(2023, 06, 25 , 23, 53 , 30),null,null);
        //act
 
         ReservaDTO act = reservaService.crearReserva(reservaRequestDTO);
@@ -35,5 +35,4 @@ public class ReservaServiceTest {
         //assert
         assertEquals(expected,act);
     }
-}
-*/
+}*/
