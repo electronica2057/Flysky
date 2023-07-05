@@ -1,7 +1,6 @@
 package com.codoacodo.flysky.demo.service;
 
 import com.codoacodo.flysky.demo.Util;
-import com.codoacodo.flysky.demo.dto.request.ReservaRequestDTO;
 import com.codoacodo.flysky.demo.dto.request.ReservaVueloDTO;
 import com.codoacodo.flysky.demo.dto.response.ReservaVueloResponseDto;
 import com.codoacodo.flysky.demo.exception.EntityNotFoundException;
@@ -89,7 +88,7 @@ public class ReservaServiceImpl implements ReservaService {
                 //Modificamos por FALSE la disponibilidad de la butaca reservada.
 
                 ButacaEntity butacaPersitencia = new ButacaEntity();
-                butacaPersitencia.setId(butacaVueloDisponibleReserva.get().getId(););
+                butacaPersitencia.setId(butacaVueloDisponibleReserva.get().getId());
                 butacaPersitencia.setDisponible(Boolean.FALSE);
                 butacaPersitencia.setPosicion(butacaVueloDisponibleReserva.get().getPosicion());
                 butacaPersitencia.setVuelo(butacaVueloDisponibleReserva.get().getVuelo());
