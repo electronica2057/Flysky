@@ -17,8 +17,11 @@ import com.codoacodo.flysky.demo.repository.UsuarioRepository;
 import com.codoacodo.flysky.demo.repository.VueloRepository;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -166,7 +169,9 @@ public class ReservaServiceImpl implements ReservaService {
         List<ReservaEntity> reservasEntity = reservaRepository.findByFechaReserva(fecha);
 
         if (reservasEntity.isEmpty()) {
-            throw new EntityNotFoundException("No hay reservas realizadas el " + fecha + ".");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+            String fechaFormateada = fecha.format(formatter);
+            throw new EntityNotFoundException("No hay reservas realizadas el " + fechaFormateada + ".");
         }
 
         VentaDTO ventaDto = new VentaDTO();
