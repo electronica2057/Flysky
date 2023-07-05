@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @RestController
 @RequestMapping("api/v1/reserva")
 public class ReservaController {
@@ -22,6 +24,14 @@ public class ReservaController {
     public ResponseEntity<?> reservarVuelo(@PathVariable String nombreUsuarioTipoCliente,
                                            @RequestBody ReservaVueloDTO reservaVueloDTO) {
         return new ResponseEntity<>(reservaService.reservarVuelo(nombreUsuarioTipoCliente, reservaVueloDTO), HttpStatus.OK);
+    }
+
+    @GetMapping("/ventas/{nombreUsuarioTipoAdministrador}/{fecha}")
+    public ResponseEntity<?> obtenerNumeroVentasIngresosDiarios(@PathVariable String nombreUsuarioTipoAdministrador,
+                                                                @PathVariable LocalDate fecha) {
+
+        return new ResponseEntity<>(reservaService
+                .obtenerNumeroVentasIngresosDiarios(nombreUsuarioTipoAdministrador, fecha), HttpStatus.OK);
     }
 
 
