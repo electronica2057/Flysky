@@ -1,6 +1,7 @@
 package com.codoacodo.flysky.demo.service;
 
-import com.codoacodo.flysky.demo.dto.request.BusquedaUsuarioDTO;
+
+import com.codoacodo.flysky.demo.dto.request.ConsultaDTO;
 import com.codoacodo.flysky.demo.dto.response.ReservaDTO;
 import com.codoacodo.flysky.demo.exception.EntityNotFoundException;
 import com.codoacodo.flysky.demo.exception.UnAuthorizedException;
@@ -23,7 +24,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public List<ReservaDTO> obtenerReservasDeCliente(BusquedaUsuarioDTO busqueda) {
+    public List<ReservaDTO> obtenerReservasDeCliente(ConsultaDTO busqueda) {
         Optional<UsuarioEntity> agenteEntity = usuarioRepository.getByNombreUsuario(busqueda.getNombreAgente());
 
         if (agenteEntity.isEmpty()) {
