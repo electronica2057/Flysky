@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -13,8 +14,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ReservaDTO {
     private TipoPago tipoPago;
-    private Double montoPagar;
-    private LocalDateTime fechaReserva;
+    private Double montoPago;
+    private LocalDate fechaReserva;
     @JsonBackReference
     private UsuarioDTO usuario;
     @JsonBackReference

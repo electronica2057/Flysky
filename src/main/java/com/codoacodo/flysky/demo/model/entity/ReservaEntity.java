@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -22,9 +23,9 @@ public class ReservaEntity {
     @Enumerated(EnumType.STRING)
     private TipoPago tipoPago;
 
-    private double montoPagar;
+    private double montoPago;
 
-    private LocalDateTime fechaReserva;
+    private LocalDate fechaReserva;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "usuario_id", nullable = false)
@@ -36,9 +37,10 @@ public class ReservaEntity {
     @JsonBackReference
     private VueloEntity vuelo;
 
-
+   /*
    @PrePersist
    public void prePersist() {
-       fechaReserva = LocalDateTime.now();
+       fechaReserva = LocalDate.now();
    }
+   */
 }

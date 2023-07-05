@@ -2,7 +2,7 @@ package com.codoacodo.flysky.demo.service;
 
 import com.codoacodo.flysky.demo.dto.request.ReservaRequestDTO;
 import com.codoacodo.flysky.demo.dto.request.ReservaVueloDTO;
-import com.codoacodo.flysky.demo.dto.response.ReservaDTO;
+import com.codoacodo.flysky.demo.dto.response.ReservaVueloResponseDto;
 import com.codoacodo.flysky.demo.exception.EntityNotFoundException;
 import com.codoacodo.flysky.demo.exception.UnAuthorizedException;
 import com.codoacodo.flysky.demo.model.entity.ButacaEntity;
@@ -10,10 +10,10 @@ import com.codoacodo.flysky.demo.model.entity.ReservaEntity;
 import com.codoacodo.flysky.demo.model.entity.UsuarioEntity;
 import com.codoacodo.flysky.demo.model.entity.VueloEntity;
 import com.codoacodo.flysky.demo.model.enums.TipoUsuario;
+import com.codoacodo.flysky.demo.repository.ButacaRepository;
 import com.codoacodo.flysky.demo.repository.ReservaRepository;
 import com.codoacodo.flysky.demo.repository.UsuarioRepository;
 import com.codoacodo.flysky.demo.repository.VueloRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -26,11 +26,13 @@ public class ReservaServiceImpl implements ReservaService {
     private final UsuarioRepository usuarioRepository;
     private final ReservaRepository reservaRepository;
     private final VueloRepository vueloRepository;
+    private final ButacaRepository butacaRepository;
 
-    public ReservaServiceImpl(UsuarioRepository usuarioRepository, ReservaRepository reservaRepository, VueloRepository vueloRepository) {
+    public ReservaServiceImpl(UsuarioRepository usuarioRepository, ReservaRepository reservaRepository, VueloRepository vueloRepository, ButacaRepository butacaRepository) {
         this.usuarioRepository = usuarioRepository;
         this.reservaRepository = reservaRepository;
         this.vueloRepository = vueloRepository;
+        this.butacaRepository = butacaRepository;
     }
 
     private ReservaEntity crearReservaEntity(ReservaRequestDTO reservaRequestDTO, VueloEntity vueloEntity, UsuarioEntity usuarioEntity) {
@@ -47,7 +49,7 @@ public class ReservaServiceImpl implements ReservaService {
     public ReservaVueloResponseDto reservarVuelo(String nombreUsuarioTipoCliente, ReservaVueloDTO
             reservaVueloDTO) {
 
-        Optional<UsuarioEntity> usuario = usuarioRepository.findByNombreUsuario(nombreUsuarioTipoCliente);
+        Optional<UsuarioEntity> usuario = usuarioRepository.getByNombreUsuario(nombreUsuarioTipoCliente);
 
         if (usuario.isPresent()) {
             //if (usuario.get().getTipoUsuario().getDescripcion().equalsIgnoreCase("Cliente"))
