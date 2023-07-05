@@ -3,6 +3,7 @@ package com.codoacodo.flysky.demo.service;
 import com.codoacodo.flysky.demo.Util;
 import com.codoacodo.flysky.demo.dto.request.ReservaVueloDTO;
 import com.codoacodo.flysky.demo.dto.response.ReservaVueloResponseDto;
+import com.codoacodo.flysky.demo.dto.response.VentaDTO;
 import com.codoacodo.flysky.demo.exception.EntityNotFoundException;
 import com.codoacodo.flysky.demo.exception.UnAuthorizedException;
 import com.codoacodo.flysky.demo.model.entity.ButacaEntity;
@@ -145,5 +146,36 @@ public class ReservaServiceImpl implements ReservaService {
                     "Registrese como CLIENTE.");
         }
         throw new NoSuchElementException("Usuario no registrado. Registrese como CLIENTE para poder realizar reservas.");
+    }
+
+    @Override
+    public VentaDTO obtenerNumeroVentasIngresosDiarios(String nombreUsuarioTipoAdministrador, LocalDate fecha) {
+
+        Optional<UsuarioEntity> usuarioAdministrador = usuarioRepository.getByNombreUsuario(nombreUsuarioTipoAdministrador);
+
+        if (usuarioAdministrador.isEmpty()) {
+            throw new NoSuchElementException("Usuario no registrado. Registrese como ADMINISTRADOR para poder visualizar " +
+                    "el número de ventas e ingresos generados diarios.");
+        }
+
+        if (!usuarioAdministrador.get().getTipoUsuario().equals(TipoUsuario.ADMINISTRADOR)) {
+            throw new UnAuthorizedException("Usuario registrado pero NO AUTORIZADO para poder visualizar " +
+                    "el número de ventas e ingresos generados diarios. Registrese como ADMINISTRADOR.");
+        }
+
+        List<ReservaEntity> reservasEntity = reservaRepository.findByFechaReserva(fecha);
+
+        if (reservasEntity.isEmpty()) {
+            throw new EntityNotFoundException("No hay reservas realizadas el " + fecha + ".");
+        }
+
+        VentaDTO ventaDto = new VentaDTO();
+        ventaDto.setFecha(fecha);
+        ventaDto.setCantidadVenta(reservasEntity.size());
+        List<Double> montosPago = reservasEntity.stream().map(ReservaEntity::getMontoPago).toList();
+        ventaDto.setIngreso(montosPago.stream()
+                .reduce(0.0, Double::sum));
+
+        return ventaDto;
     }
 }
