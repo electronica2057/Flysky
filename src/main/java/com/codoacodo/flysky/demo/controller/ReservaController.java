@@ -1,7 +1,7 @@
 package com.codoacodo.flysky.demo.controller;
 
 import com.codoacodo.flysky.demo.dto.request.ReservaVueloDTO;
-import com.codoacodo.flysky.demo.repository.ReservaRepository;
+import com.codoacodo.flysky.demo.service.ReservaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ReservaController {
 
-    private final ReservaRepository reservaRepository;
+    private final ReservaService reservaService;
 
-    public ReservaController(ReservaRepository reservaRepository) {
-        this.reservaRepository = reservaRepository;
+    public ReservaController(ReservaService reservaService) {
+        this.reservaService = reservaService;
     }
 
 
@@ -23,7 +23,7 @@ public class ReservaController {
     @PutMapping("/nuevaReserva/{nombreUsuarioTipoCliente}")
     public ResponseEntity<?> reservarVuelo(@PathVariable String nombreUsuarioTipoCliente,
                                            @RequestBody ReservaVueloDTO reservaVueloDTO) {
-        return new ResponseEntity<>(reservaRepository.reservarVuelo(nombreUsuarioTipoCliente, reservaVueloDTO), HttpStatus.OK);
+        return new ResponseEntity<>(reservaService.reservarVuelo(nombreUsuarioTipoCliente, reservaVueloDTO), HttpStatus.OK);
     }
 
 
