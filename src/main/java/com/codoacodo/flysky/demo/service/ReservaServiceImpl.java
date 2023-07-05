@@ -1,8 +1,10 @@
 package com.codoacodo.flysky.demo.service;
 
 import com.codoacodo.flysky.demo.dto.request.ReservaRequestDTO;
+import com.codoacodo.flysky.demo.dto.request.ReservaVueloDTO;
 import com.codoacodo.flysky.demo.dto.response.ReservaDTO;
 import com.codoacodo.flysky.demo.exception.EntityNotFoundException;
+import com.codoacodo.flysky.demo.exception.UnAuthorizedException;
 import com.codoacodo.flysky.demo.model.entity.ButacaEntity;
 import com.codoacodo.flysky.demo.model.entity.ReservaEntity;
 import com.codoacodo.flysky.demo.model.entity.UsuarioEntity;
@@ -31,19 +33,7 @@ public class ReservaServiceImpl implements ReservaService {
         this.vueloRepository = vueloRepository;
     }
 
-    @Override
-    public ReservaDTO crearReserva(ReservaRequestDTO reservaRequestDTO) {
-        ModelMapper mapper = new ModelMapper();
-        UsuarioEntity usuarioEntity = usuarioRepository.findById(reservaRequestDTO.getUsuarioId()).orElse(null);
-        VueloEntity vueloEntity = vueloRepository.findById(reservaRequestDTO.getVueloId()).orElse(null);
-        ReservaEntity reserva = crearReservaEntity(reservaRequestDTO, vueloEntity, usuarioEntity);
-        ReservaEntity reservaRes = reservaRepository.save(reserva);
-        ReservaDTO ReservaDtoRes = mapper.map(reservaRes, ReservaDTO.class);
-
-        return ReservaDtoRes;
-    }
-
-    private ReservaEntity crearReservaEntity (ReservaRequestDTO reservaRequestDTO, VueloEntity vueloEntity, UsuarioEntity usuarioEntity){
+    private ReservaEntity crearReservaEntity(ReservaRequestDTO reservaRequestDTO, VueloEntity vueloEntity, UsuarioEntity usuarioEntity) {
         ReservaEntity reservaEntity = new ReservaEntity();
         reservaEntity.setMontoPagar(reservaRequestDTO.getMontoPagar());
         reservaEntity.setTipoPago(reservaRequestDTO.getTipoPago());
@@ -54,8 +44,8 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public ReservaVueloResponseDto reservarVuelo(String nombreUsuarioTipoCliente, ReservaVueloDto
-            reservaVueloDto) {
+    public ReservaVueloResponseDto reservarVuelo(String nombreUsuarioTipoCliente, ReservaVueloDTO
+            reservaVueloDTO) {
 
         Optional<UsuarioEntity> usuario = usuarioRepository.findByNombreUsuario(nombreUsuarioTipoCliente);
 
@@ -72,11 +62,11 @@ public class ReservaServiceImpl implements ReservaService {
 
                 Optional<VueloEntity> vueloDisponibleReserva = vuelosDisponibles.stream()
                         .filter(vueloDisponible ->
-                                vueloDisponible.getAerolinea().equalsIgnoreCase(reservaVueloDto.getAerolinea()) &
-                                        vueloDisponible.getFechaHoraPartida().equals(reservaVueloDto.getFechaHoraPartida()) &
-                                        vueloDisponible.getFechaHoraLlegada().equals(reservaVueloDto.getFechaHoraLlegada()) &
-                                        vueloDisponible.getOrigen().equalsIgnoreCase(reservaVueloDto.getOrigen()) &
-                                        vueloDisponible.getDestino().equalsIgnoreCase(reservaVueloDto.getDestino())
+                                vueloDisponible.getAerolinea().equalsIgnoreCase(reservaVueloDTO.getAerolinea()) &
+                                        vueloDisponible.getFechaHoraPartida().equals(reservaVueloDTO.getFechaHoraPartida()) &
+                                        vueloDisponible.getFechaHoraLlegada().equals(reservaVueloDTO.getFechaHoraLlegada()) &
+                                        vueloDisponible.getOrigen().equalsIgnoreCase(reservaVueloDTO.getOrigen()) &
+                                        vueloDisponible.getDestino().equalsIgnoreCase(reservaVueloDTO.getDestino())
                         ).findFirst();
                 //PREGUNTAR SI SE DEBE HACER PORQUE EN EL FRONT TENDRIAMOS OPCIONES PARA SELECCIONAR DE LO QUE HAY
                 // DISPONIBLE Y NO PARA RELLENAR
@@ -91,7 +81,7 @@ public class ReservaServiceImpl implements ReservaService {
                 }
 
                 Optional<ButacaEntity> butacaVueloDisponibleReserva = butacasVueloDisponibleReserva.stream()
-                        .filter(butaca -> reservaVueloDto.getPosicionButaca().equals(butaca.getPosicion()))
+                        .filter(butaca -> reservaVueloDTO.getPosicionButaca().equals(butaca.getPosicion()))
                         .findFirst();
                 //PREGUNTAR SI SE DEBE HACER PORQUE EN EL FRONT TENDRIAMOS OPCIONES PARA SELECCIONAR DE LO QUE HAY
                 // DISPONIBLE Y NO PARA RELLENAR
@@ -139,10 +129,10 @@ public class ReservaServiceImpl implements ReservaService {
                     vueloRepository.save(vueloDisponibleReservaPersistencia);
                 }
 
-                Double montoPago = Util.montoAPagar(reservaVueloDto.getTipoPago(), vueloDisponibleReserva.get().getPrecio());
+                Double montoPago = Util.montoAPagar(reservaVueloDTO.getTipoPago(), vueloDisponibleReserva.get().getPrecio());
 
                 ReservaEntity reservaEntityPersistencia = new ReservaEntity();
-                reservaEntityPersistencia.setTipoPago(reservaVueloDto.getTipoPago());
+                reservaEntityPersistencia.setTipoPago(reservaVueloDTO.getTipoPago());
                 reservaEntityPersistencia.setMontoPago(montoPago);
                 reservaEntityPersistencia.setFechaReserva(LocalDate.now());
                 reservaEntityPersistencia.setUsuario(usuario.get());

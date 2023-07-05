@@ -1,10 +1,11 @@
 package com.codoacodo.flysky.demo.service;
 
-import com.codoacodo.flysky.demo.dto.request.ReservaRequestDTO;
-import com.codoacodo.flysky.demo.dto.response.ReservaDTO;
+import com.codoacodo.flysky.demo.dto.request.ReservaVueloDTO;
+
 
 public interface ReservaService {
-    //crear reserva --NUEVO
-    ReservaDTO crearReserva(ReservaRequestDTO requestDTO);
+
+    ReservaVueloResponseDto reservarVuelo(String nombreUsuarioTipoCliente, ReservaVueloDTO
+            reservaVueloDTO);
 
 }

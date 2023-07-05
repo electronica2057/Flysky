@@ -19,12 +19,4 @@ public class ClienteController {
     public ResponseEntity<?> verReservasDeUsuario(@RequestBody BusquedaUsuarioDTO busqueda) {
         return new ResponseEntity<>(clienteService.obtenerReservasDeCliente(busqueda), HttpStatus.OK);
     }
-
-    /*
-    Pasarlo a su propio controlador de reservas
-    @PostMapping("/nuevaReserva")
-    public ResponseEntity<?> crearReserva(@RequestBody ReservaRequestDTO reservaDTO){
-        return new ResponseEntity<>(clienteService.crearReserva(reservaDTO),HttpStatus.OK);
-    }
-    */
 }

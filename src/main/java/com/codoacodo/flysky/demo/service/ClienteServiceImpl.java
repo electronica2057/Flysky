@@ -3,7 +3,7 @@ package com.codoacodo.flysky.demo.service;
 import com.codoacodo.flysky.demo.dto.request.BusquedaUsuarioDTO;
 import com.codoacodo.flysky.demo.dto.response.ReservaDTO;
 import com.codoacodo.flysky.demo.exception.EntityNotFoundException;
-import com.codoacodo.flysky.demo.exception.UnauthorizedException;
+import com.codoacodo.flysky.demo.exception.UnAuthorizedException;
 import com.codoacodo.flysky.demo.model.entity.ReservaEntity;
 import com.codoacodo.flysky.demo.model.entity.UsuarioEntity;
 import com.codoacodo.flysky.demo.model.enums.TipoUsuario;
@@ -33,7 +33,7 @@ public class ClienteServiceImpl implements ClienteService {
         TipoUsuario tipoAgente = agenteEntity.get().getTipoUsuario();
 
         if (!tipoAgente.equals(TipoUsuario.AGENTE_DE_VENTAS)) {
-            throw new UnauthorizedException("El usuario no está autorizado para visualizar las reservas");
+            throw new UnAuthorizedException("El usuario no está autorizado para visualizar las reservas");
         }
 
         Optional<UsuarioEntity> usuarioEntity = usuarioRepository.getByNombreUsuario(busqueda.getNombreUsuario());
