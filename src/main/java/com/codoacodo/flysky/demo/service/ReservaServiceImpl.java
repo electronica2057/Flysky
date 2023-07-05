@@ -35,17 +35,6 @@ public class ReservaServiceImpl implements ReservaService {
         this.vueloRepository = vueloRepository;
         this.butacaRepository = butacaRepository;
     }
-
-    private ReservaEntity crearReservaEntity(ReservaRequestDTO reservaRequestDTO, VueloEntity vueloEntity, UsuarioEntity usuarioEntity) {
-        ReservaEntity reservaEntity = new ReservaEntity();
-        reservaEntity.setMontoPagar(reservaRequestDTO.getMontoPagar());
-        reservaEntity.setTipoPago(reservaRequestDTO.getTipoPago());
-        reservaEntity.setUsuario(usuarioEntity);
-        reservaEntity.setVuelo(vueloEntity);
-        return reservaEntity;
-
-    }
-
     @Override
     public ReservaVueloResponseDto reservarVuelo(String nombreUsuarioTipoCliente, ReservaVueloDTO
             reservaVueloDTO) {
