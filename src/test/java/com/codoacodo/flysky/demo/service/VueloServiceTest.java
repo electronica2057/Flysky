@@ -6,7 +6,6 @@ import com.codoacodo.flysky.demo.repository.VueloRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.modelmapper.ModelMapper;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,8 +28,8 @@ public class VueloServiceTest {
         vueloEntity1.setDisponible(true);
         vueloEntity1.setCapacidad(50);
         vueloEntity1.setAerolinea("Aerolineas Argentinas");
-        vueloEntity1.setHorarioPartida(LocalDateTime.parse("2023-06-25T23:53:30"));
-        vueloEntity1.setHorarioLlegada(LocalDateTime.parse("2023-06-25T23:53:30"));
+        vueloEntity1.setFechaHoraPartida((LocalDateTime.parse("2023-06-25T23:53:30")));
+        vueloEntity1.setFechaHoraPartida((LocalDateTime.parse("2023-06-25T23:53:30")));
         vueloEntity1.setPrecio(15000.0);
         vueloEntity1.setOrigen("Buenos Aires");
         vueloEntity1.setDestino("Uruguay");
@@ -40,8 +39,8 @@ public class VueloServiceTest {
         vueloEntity2.setDisponible(true);
         vueloEntity2.setCapacidad(50);
         vueloEntity2.setAerolinea("Aerolineas Uruguayas");
-        vueloEntity2.setHorarioPartida(LocalDateTime.parse("2023-06-25T23:53:30"));
-        vueloEntity2.setHorarioLlegada(LocalDateTime.parse("2023-06-25T23:53:30"));
+        vueloEntity2.setFechaHoraPartida(LocalDateTime.parse("2023-06-25T23:53:30"));
+        vueloEntity2.setFechaHoraPartida((LocalDateTime.parse("2023-06-25T23:53:30")));
         vueloEntity2.setPrecio(15000.0);
         vueloEntity2.setOrigen("Buenos Aires");
         vueloEntity2.setDestino("Uruguay");
