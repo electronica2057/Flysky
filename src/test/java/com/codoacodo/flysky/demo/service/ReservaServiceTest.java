@@ -1,7 +1,7 @@
-/*package com.codoacodo.flysky.demo.service;
+package com.codoacodo.flysky.demo.service;
 
-import com.codoacodo.flysky.demo.dto.request.ReservaRequestDTO;
-import com.codoacodo.flysky.demo.dto.response.ReservaDTO;
+import com.codoacodo.flysky.demo.dto.request.ReservaVueloDTO;
+import com.codoacodo.flysky.demo.dto.response.ReservaVueloResponseDto;
 import com.codoacodo.flysky.demo.model.enums.TipoPago;
 import com.codoacodo.flysky.demo.repository.ReservaRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -15,9 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 public class ReservaServiceTest {
-
     @Autowired
-    ReservaServiceTest reservaService;
+    ReservaService reservaService;
 
     @Autowired
     ReservaRepository reservaRepository;
@@ -26,13 +25,13 @@ public class ReservaServiceTest {
     @DisplayName("Camino feliz obtener reserva...")
     void obtenerReservasPorNombreUsuarioOkTest(){
         //arrange
-        ReservaRequestDTO reservaRequestDTO = new ReservaRequestDTO(TipoPago.TARJETA_CREDITO, 1500.00, 1L, 1L);
-        ReservaDTO expected = new ReservaDTO(TipoPago.TARJETA_CREDITO, 1500.00, LocalDateTime.of(2023, 06, 25 , 23, 53 , 30),null,null);
-       //act
+        ReservaVueloDTO reservaVueloDTO = new ReservaVueloDTO("Aerolineas Argentinas", LocalDateTime.of(2023, 6, 25, 23, 53, 30), LocalDateTime.of(2023, 6, 25, 23, 53, 30), "Buenos Aires", "Uruguay", "AE04", TipoPago.EFECTIVO);
+        ReservaVueloDTO expected = new ReservaVueloDTO("Aerolineas Argentinas", LocalDateTime.of(2023, 6, 25, 23, 53, 30), LocalDateTime.of(2023, 6, 25, 23, 53, 30), "Buenos Aires", "Uruguay", "AE04", TipoPago.EFECTIVO);
 
-        ReservaDTO act = reservaService.crearReserva(reservaRequestDTO);
+        //act
+        ReservaVueloResponseDto act = reservaService.reservarVuelo("Miguel", reservaVueloDTO);
 
         //assert
-        assertEquals(expected,act);
+        assertEquals(expected, act);
     }
-}*/
+}
