@@ -1,6 +1,5 @@
 package com.codoacodo.flysky.demo.controller;
 
-import com.codoacodo.flysky.demo.dto.request.ConsultaDTO;
 import com.codoacodo.flysky.demo.dto.request.ReservaVueloDTO;
 import com.codoacodo.flysky.demo.service.ReservaService;
 import org.springframework.http.HttpStatus;
@@ -27,12 +26,12 @@ public class ReservaController {
         return new ResponseEntity<>(reservaService.reservarVuelo(nombreUsuarioTipoCliente, reservaVueloDTO), HttpStatus.OK);
     }
 
-    @GetMapping("/ventas/{fecha}")
-    public ResponseEntity<?> obtenerNumeroVentasIngresosDiarios(@RequestBody ConsultaDTO usuario,
-                                                                @PathVariable LocalDate fecha) {
+    @GetMapping("/ventas")
+    public ResponseEntity<?> obtenerNumeroVentasIngresosDiarios(@RequestParam String nombreUsuario,
+                                                                @RequestParam LocalDate fecha) {
 
         return new ResponseEntity<>(reservaService
-                .obtenerNumeroVentasIngresosDiarios(usuario.getNombreAgente(), fecha), HttpStatus.OK);
+                .obtenerNumeroVentasIngresosDiarios(nombreUsuario, fecha), HttpStatus.OK);
     }
 
 

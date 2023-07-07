@@ -1,10 +1,8 @@
 package com.codoacodo.flysky.demo.controller;
 
-import com.codoacodo.flysky.demo.dto.request.ConsultaDTO;
 import com.codoacodo.flysky.demo.dto.response.ReservaDTO;
 import com.codoacodo.flysky.demo.model.enums.TipoPago;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Disabled;
@@ -12,23 +10,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -51,19 +44,18 @@ public class IntegrationTest {
         reservas.add(testPostDto2);
         reservas.add(testPostDto3);
 
-        ConsultaDTO responseDto = new ConsultaDTO("Carlos","Miguel");
-
         ObjectMapper writer = new ObjectMapper()
                 .registerModule(new JavaTimeModule())
                 .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
-        String jsonPayload = writer.writeValueAsString(responseDto);
-        System.out.println("reservas = " + reservas);
+        String nombreUsuario = "Carlos";
+        String nombreCliente = "Miguel";
+
         String responseJson = writer.writeValueAsString(reservas);
 
         MvcResult mvcResult = mockMvc.perform(get("/api/v1/clientes/reservas")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonPayload))
+                        .param("nombreUsuario", nombreUsuario)
+                        .param("nombreCliente", nombreCliente))
                 .andDo(print())
                 .andExpect(content().contentType("application/json"))
                 .andReturn();
