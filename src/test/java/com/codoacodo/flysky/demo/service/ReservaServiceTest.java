@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,8 +27,8 @@ public class ReservaServiceTest {
     void obtenerReservasPorNombreUsuarioOkTest(){
         //arrange
         ReservaVueloDTO reservaVueloDTO = new ReservaVueloDTO("Aerolineas Argentinas", LocalDateTime.of(2023, 6, 25, 23, 53, 30), LocalDateTime.of(2023, 6, 25, 23, 53, 30), "Buenos Aires", "Uruguay", "AE04", TipoPago.EFECTIVO);
-        ReservaVueloDTO expected = new ReservaVueloDTO("Aerolineas Argentinas", LocalDateTime.of(2023, 6, 25, 23, 53, 30), LocalDateTime.of(2023, 6, 25, 23, 53, 30), "Buenos Aires", "Uruguay", "AE04", TipoPago.EFECTIVO);
-
+        //ReservaVueloDTO expected2 = new ReservaVueloDTO("Aerolineas Argentinas", LocalDateTime.of(2023, 6, 25, 23, 53, 30), LocalDateTime.of(2023, 6, 25, 23, 53, 30), "Buenos Aires", "Uruguay", "AE04", TipoPago.EFECTIVO);
+        ReservaVueloResponseDto expected = new ReservaVueloResponseDto("Miguel","Aerolineas Argentinas",LocalDateTime.of(2023, 6, 25, 23, 53, 30),LocalDateTime.of(2023, 6, 25, 23, 53, 30),"Buenos Aires","Uruguay","AE04",TipoPago.EFECTIVO,15000, LocalDate.of(2023,7,7));
         //act
         ReservaVueloResponseDto act = reservaService.reservarVuelo("Miguel", reservaVueloDTO);
 

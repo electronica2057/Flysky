@@ -23,7 +23,7 @@ public class VueloEntity {
     @JsonManagedReference
     private List<ReservaEntity> reservas;
 
-    @OneToMany(mappedBy = "vuelo", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "vuelo", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<ButacaEntity> butacas;
 

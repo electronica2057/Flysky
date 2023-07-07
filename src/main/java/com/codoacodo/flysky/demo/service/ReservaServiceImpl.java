@@ -15,6 +15,7 @@ import com.codoacodo.flysky.demo.repository.ButacaRepository;
 import com.codoacodo.flysky.demo.repository.ReservaRepository;
 import com.codoacodo.flysky.demo.repository.UsuarioRepository;
 import com.codoacodo.flysky.demo.repository.VueloRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -39,6 +40,7 @@ public class ReservaServiceImpl implements ReservaService {
         this.butacaRepository = butacaRepository;
     }
     @Override
+    @Transactional
     public ReservaVueloResponseDto reservarVuelo(String nombreUsuarioTipoCliente, ReservaVueloDTO
             reservaVueloDTO) {
 
