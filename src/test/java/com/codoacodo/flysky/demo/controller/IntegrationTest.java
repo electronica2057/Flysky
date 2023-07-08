@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -62,6 +64,21 @@ public class IntegrationTest {
 
         assertEquals(responseJson,mvcResult.getResponse().getContentAsString());
     }
+
+    @Test
+    void validacionCreacionUsuario() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/api/v1/reserva/ventas")
+                        .param("nombreUsuario", "Juan")
+                        .param("fecha",  "2023-06-29"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+               // .andExpect(MockMvcResultMatchers.jsonPath("$.nombre").value("Juan"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.ingreso").value(5000.0))
+                .andReturn();
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
 
 
 
