@@ -1,7 +1,5 @@
 package com.codoacodo.flysky.demo.controller;
 
-
-import com.codoacodo.flysky.demo.dto.request.ConsultaDTO;
 import com.codoacodo.flysky.demo.service.ClienteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +15,7 @@ public class ClienteController {
     }
 
     @GetMapping("/reservas")
-    public ResponseEntity<?> verReservasDeUsuario(@RequestBody ConsultaDTO busqueda) {
-        return new ResponseEntity<>(clienteService.obtenerReservasDeCliente(busqueda), HttpStatus.OK);
+    public ResponseEntity<?> verReservasDeUsuario(@RequestParam String nombreUsuario, @RequestParam String nombreCliente) {
+        return new ResponseEntity<>(clienteService.obtenerReservasDeCliente(nombreUsuario, nombreCliente), HttpStatus.OK);
     }
 }

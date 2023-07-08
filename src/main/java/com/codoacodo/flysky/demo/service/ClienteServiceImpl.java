@@ -1,7 +1,6 @@
 package com.codoacodo.flysky.demo.service;
 
 
-import com.codoacodo.flysky.demo.dto.request.ConsultaDTO;
 import com.codoacodo.flysky.demo.dto.response.ReservaDTO;
 import com.codoacodo.flysky.demo.exception.EntityNotFoundException;
 import com.codoacodo.flysky.demo.exception.UnAuthorizedException;
@@ -24,26 +23,26 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public List<ReservaDTO> obtenerReservasDeCliente(ConsultaDTO busqueda) {
-        Optional<UsuarioEntity> agenteEntity = usuarioRepository.getByNombreUsuario(busqueda.getNombreAgente());
+    public List<ReservaDTO> obtenerReservasDeCliente(String nombreUsuario, String nombreCliente) {
+        Optional<UsuarioEntity> usuarioEntity = usuarioRepository.getByNombreUsuario(nombreUsuario);
 
-        if (agenteEntity.isEmpty()) {
-            throw new EntityNotFoundException("Agente no encontrado");
-        }
-
-        TipoUsuario tipoAgente = agenteEntity.get().getTipoUsuario();
-
-        if (!tipoAgente.equals(TipoUsuario.AGENTE_DE_VENTAS)) {
-            throw new UnAuthorizedException("El usuario no está autorizado para visualizar las reservas");
-        }
-
-        Optional<UsuarioEntity> usuarioEntity = usuarioRepository.getByNombreUsuario(busqueda.getNombreUsuario());
-
-        if (usuarioEntity.isEmpty()){
+        if (usuarioEntity.isEmpty()) {
             throw new EntityNotFoundException("Usuario no encontrado");
         }
 
-        List<ReservaEntity> reservaEntities = usuarioEntity.get().getReserva();
+        TipoUsuario tipoUsuario = usuarioEntity.get().getTipoUsuario();
+
+        if (!tipoUsuario.equals(TipoUsuario.AGENTE_DE_VENTAS)) {
+            throw new UnAuthorizedException("El usuario no está autorizado para visualizar las reservas");
+        }
+
+        Optional<UsuarioEntity> clienteEntity = usuarioRepository.getByNombreUsuario(nombreCliente);
+
+        if (clienteEntity.isEmpty()){
+            throw new EntityNotFoundException("Cliente no encontrado");
+        }
+
+        List<ReservaEntity> reservaEntities = clienteEntity.get().getReserva();
 
         if (reservaEntities.isEmpty()){
             throw new EntityNotFoundException("Reservas no encontradas");
