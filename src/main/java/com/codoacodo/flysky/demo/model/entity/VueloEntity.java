@@ -20,11 +20,9 @@ public class VueloEntity {
     private Long id;
 
     @OneToMany(mappedBy = "vuelo", cascade = CascadeType.ALL)
-    @JsonManagedReference
     private List<ReservaEntity> reservas;
 
     @OneToMany(mappedBy = "vuelo", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JsonManagedReference
     private List<ButacaEntity> butacas;
 
     private Boolean disponible = false;

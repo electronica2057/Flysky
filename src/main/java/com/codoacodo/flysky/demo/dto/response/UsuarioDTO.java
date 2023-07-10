@@ -13,6 +13,4 @@ import java.util.List;
 public class UsuarioDTO {
     private String nombreUsuario;
     private Integer telefono;
-    @JsonManagedReference
-    private List<ReservaDTO> reserva;
 }

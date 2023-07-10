@@ -14,13 +14,11 @@ import java.time.LocalDateTime;
 public class ReservaVueloResponseDto {
 
     private String nombreUsuario;
-
     private String aerolinea;
     private LocalDateTime fechaHoraPartida;
     private LocalDateTime fechaHoraLlegada;
     private String origen;
     private String destino;
-
     private String posicionButaca;
 
     private TipoPago tipoPago;

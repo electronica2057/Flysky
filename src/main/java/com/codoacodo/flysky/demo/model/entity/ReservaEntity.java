@@ -28,12 +28,10 @@ public class ReservaEntity {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "usuario_id", nullable = false)
-    @JsonBackReference
     private UsuarioEntity usuario;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "vuelo_id", nullable = false)
-    @JsonBackReference
     private VueloEntity vuelo;
 
    /*

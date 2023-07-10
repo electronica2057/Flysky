@@ -26,6 +26,5 @@ public class UsuarioEntity {
     private Integer telefono;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonManagedReference
     private List<ReservaEntity> reserva;
 }

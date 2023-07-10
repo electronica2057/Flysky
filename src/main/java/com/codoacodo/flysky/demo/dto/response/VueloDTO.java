@@ -12,9 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VueloDTO {
-        @JsonManagedReference
-        private List<ReservaDTO> reservas;
-        @JsonManagedReference
+
         private List<ButacaDTO> butacas;
         private Boolean disponible;
         private Integer capacidad;
