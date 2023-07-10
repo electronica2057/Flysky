@@ -1,6 +1,6 @@
 package com.codoacodo.flysky.demo.service;
 
-import com.codoacodo.flysky.demo.Util;
+import com.codoacodo.flysky.demo.util.Util;
 import com.codoacodo.flysky.demo.dto.request.ReservaVueloDTO;
 import com.codoacodo.flysky.demo.dto.response.ReservaVueloResponseDto;
 import com.codoacodo.flysky.demo.dto.response.VentaDTO;
@@ -101,7 +101,7 @@ public class ReservaServiceImpl implements ReservaService {
 
         ReservaEntity reservaEntity = new ReservaEntity();
         reservaEntity.setTipoPago(reservaVueloDTO.getTipoPago());
-        reservaEntity.setMontoPago(Util.montoAPagar(reservaVueloDTO.getTipoPago(), vueloAReservar.getPrecio()));
+        reservaEntity.setMontoPago(Util.calcularMonto(reservaVueloDTO.getTipoPago(), vueloAReservar.getPrecio()));
         reservaEntity.setFechaReserva(LocalDate.now());
         reservaEntity.setUsuario(usuario);
         reservaEntity.setVuelo(vueloAReservar);
