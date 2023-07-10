@@ -1,197 +1,64 @@
 package com.codoacodo.flysky.demo.service;
 
 import com.codoacodo.flysky.demo.dto.response.ReservaDTO;
+import com.codoacodo.flysky.demo.model.entity.ReservaEntity;
 import com.codoacodo.flysky.demo.model.entity.UsuarioEntity;
+import com.codoacodo.flysky.demo.model.enums.TipoUsuario;
+
+import com.codoacodo.flysky.demo.repository.ButacaRepository;
 import com.codoacodo.flysky.demo.repository.ReservaRepository;
 import com.codoacodo.flysky.demo.repository.UsuarioRepository;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.codoacodo.flysky.demo.repository.VueloRepository;
+import org.junit.jupiter.api.*;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.FluentQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 public class ClienteServiceTest {
-    @Autowired
-    ClienteService clienteService;
+    private ClienteService clienteService;
+    private UsuarioRepository usuarioRepository;
 
-    @Autowired
-    UsuarioRepository usuarioRepository;
+  /*  public ClienteServiceTest(UsuarioRepository usuarioRepository,ClienteService clienteService) {
+        this.usuarioRepository = usuarioRepository;
+        this.clienteService = clienteService;
+    }*/
 
+
+      @BeforeEach
+   void setUp() {
+        MockitoAnnotations.openMocks(this);
+        usuarioRepository = Mockito.mock(UsuarioRepository.class);
+       clienteService = new ClienteServiceImpl(usuarioRepository);
+    }
+//NO funciona
     @Test
-    @DisplayName("Cliente de esta reserva")
-    void obtenerReservasDeClienteOkTest() {
-        //arrange
-        UsuarioRepository usuarioRepository = new UsuarioRepository() {
-            @Override
-            public Optional<UsuarioEntity> getByNombreUsuario(String nombreUsuario) {
-                return Optional.empty();
-            }
+    @DisplayName("Obtener reservas de cliente - Éxito")
+    void obtenerReservasDeClienteExito() {
+        // Arrange
+        String nombreUsuario = "Carlos";
+        String nombreCliente = "Miguel";
+        UsuarioEntity usuarioEntity = new UsuarioEntity();
+        usuarioEntity.setTipoUsuario(TipoUsuario.AGENTE_DE_VENTAS);
+        UsuarioEntity clienteEntity = new UsuarioEntity();
+        List<ReservaEntity> reservaEntities = new ArrayList<>();
+        reservaEntities.add(new ReservaEntity());
+        clienteEntity.setReserva(reservaEntities);
+        when(usuarioRepository.getByNombreUsuario(nombreUsuario)).thenReturn(Optional.of(usuarioEntity));
+        when(usuarioRepository.getByNombreUsuario(nombreCliente)).thenReturn(Optional.of(clienteEntity));
 
-            @Override
-            public void flush() {
-
-            }
-
-            @Override
-            public <S extends UsuarioEntity> S saveAndFlush(S entity) {
-                return null;
-            }
-
-            @Override
-            public <S extends UsuarioEntity> List<S> saveAllAndFlush(Iterable<S> entities) {
-                return null;
-            }
-
-            @Override
-            public void deleteAllInBatch(Iterable<UsuarioEntity> entities) {
-
-            }
-
-            @Override
-            public void deleteAllByIdInBatch(Iterable<Long> longs) {
-
-            }
-
-            @Override
-            public void deleteAllInBatch() {
-
-            }
-
-            @Override
-            public UsuarioEntity getOne(Long aLong) {
-                return null;
-            }
-
-            @Override
-            public UsuarioEntity getById(Long aLong) {
-                return null;
-            }
-
-            @Override
-            public UsuarioEntity getReferenceById(Long aLong) {
-                return null;
-            }
-
-            @Override
-            public <S extends UsuarioEntity> List<S> findAll(Example<S> example) {
-                return null;
-            }
-
-            @Override
-            public <S extends UsuarioEntity> List<S> findAll(Example<S> example, Sort sort) {
-                return null;
-            }
-
-            @Override
-            public <S extends UsuarioEntity> List<S> saveAll(Iterable<S> entities) {
-                return null;
-            }
-
-            @Override
-            public List<UsuarioEntity> findAll() {
-                return null;
-            }
-
-            @Override
-            public List<UsuarioEntity> findAllById(Iterable<Long> longs) {
-                return null;
-            }
-
-            @Override
-            public <S extends UsuarioEntity> S save(S entity) {
-                return null;
-            }
-
-            @Override
-            public Optional<UsuarioEntity> findById(Long aLong) {
-                return Optional.empty();
-            }
-
-            @Override
-            public boolean existsById(Long aLong) {
-                return false;
-            }
-
-            @Override
-            public long count() {
-                return 0;
-            }
-
-            @Override
-            public void deleteById(Long aLong) {
-
-            }
-
-            @Override
-            public void delete(UsuarioEntity entity) {
-
-            }
-
-            @Override
-            public void deleteAllById(Iterable<? extends Long> longs) {
-
-            }
-
-            @Override
-            public void deleteAll(Iterable<? extends UsuarioEntity> entities) {
-
-            }
-
-            @Override
-            public void deleteAll() {
-
-            }
-
-            @Override
-            public List<UsuarioEntity> findAll(Sort sort) {
-                return null;
-            }
-
-            @Override
-            public Page<UsuarioEntity> findAll(Pageable pageable) {
-                return null;
-            }
-
-            @Override
-            public <S extends UsuarioEntity> Optional<S> findOne(Example<S> example) {
-                return Optional.empty();
-            }
-
-            @Override
-            public <S extends UsuarioEntity> Page<S> findAll(Example<S> example, Pageable pageable) {
-                return null;
-            }
-
-            @Override
-            public <S extends UsuarioEntity> long count(Example<S> example) {
-                return 0;
-            }
-
-            @Override
-            public <S extends UsuarioEntity> boolean exists(Example<S> example) {
-                return false;
-            }
-
-            @Override
-            public <S extends UsuarioEntity, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
-                return null;
-            }
-        };
+        // Act
+        List<ReservaDTO> reservas = clienteService.obtenerReservasDeCliente(nombreUsuario, nombreCliente);
+        System.out.println("reservaEntities.size() = " + reservaEntities.size());
+        System.out.println("reservas.size() = " + reservas.size());
+        System.out.println("Usuario"+reservas.get(0).getUsuario());
+        // Assert
+        assertEquals(reservaEntities.size(), reservas.size());
     }
-    //act
-   // List<ReservaDTO> reserva = clienteService.obtenerReservasDeCliente("Mariano", "Mariano");
-    //assert
-    //assertEquals(expected, act);
-
-    }
-
-
-
-
+}
