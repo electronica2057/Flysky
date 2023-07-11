@@ -1,6 +1,9 @@
 package com.codoacodo.flysky.demo.controller;
 
+import com.codoacodo.flysky.demo.dto.response.ButacaDTO;
 import com.codoacodo.flysky.demo.dto.response.ReservaDTO;
+import com.codoacodo.flysky.demo.dto.response.UsuarioDTO;
+import com.codoacodo.flysky.demo.dto.response.VueloDTO;
 import com.codoacodo.flysky.demo.model.enums.TipoPago;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -16,6 +19,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,10 +42,9 @@ public class IntegrationTest {
     public void testReservas() throws Exception {
         List<ReservaDTO> reservas = new ArrayList<>();
 
-        ReservaDTO testPostDto= new ReservaDTO(TipoPago.TARJETA_CREDITO,1500.00, LocalDate.of(2023,6,25),null,null);
-        ReservaDTO testPostDto2= new ReservaDTO(TipoPago.TRANSFERENCIA_BANCARIA,2000.00, LocalDate.of(2023,6,29),null,null);
-        ReservaDTO testPostDto3= new ReservaDTO(TipoPago.EFECTIVO,3000.00, LocalDate.of(2023,6,29),null,null);
-
+        ReservaDTO testPostDto= new ReservaDTO(TipoPago.TARJETA_CREDITO,1500.00, LocalDate.of(2023,6,25),new UsuarioDTO("Miguel", 156453),new VueloDTO(List.of(new ButacaDTO(true, "AE04"), new ButacaDTO(true, "AE05"), new ButacaDTO(true, "AE06")), true, 50, "Aerolineas Argentinas", LocalDateTime.of(2023, 6, 25, 23, 53, 30), LocalDateTime.of(2023, 6, 25, 23, 53, 30), 15000.0, "Buenos Aires", "Uruguay"));
+        ReservaDTO testPostDto2= new ReservaDTO(TipoPago.TRANSFERENCIA_BANCARIA,2000.00, LocalDate.of(2023,6,29),new UsuarioDTO("Miguel", 156453),new VueloDTO (List.of(), false, 50, "Aerolineas Argentinas", LocalDateTime.of(2023, 6, 25, 23, 53, 30), LocalDateTime.of(2023, 6, 25, 23, 53, 30), 15000.0, "Buenos Aires", "Uruguay"));
+        ReservaDTO testPostDto3= new ReservaDTO(TipoPago.EFECTIVO,3000.00, LocalDate.of(2023,6,29),new UsuarioDTO("Miguel", 156453),new VueloDTO (List.of(), false, 50, "Aerolineas Argentinas", LocalDateTime.of(2023, 6, 25, 23, 53, 30), LocalDateTime.of(2023, 6, 25, 23, 53, 30), 15000.0, "Buenos Aires", "Uruguay"));
         reservas.add(testPostDto);
         reservas.add(testPostDto2);
         reservas.add(testPostDto3);
