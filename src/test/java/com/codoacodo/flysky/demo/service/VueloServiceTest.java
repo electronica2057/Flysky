@@ -1,66 +1,53 @@
-package com.codoacodo.flysky.demo.service;
-
+import com.codoacodo.flysky.demo.DemoApplication;
 import com.codoacodo.flysky.demo.dto.response.VueloDTO;
-import com.codoacodo.flysky.demo.model.entity.UsuarioEntity;
-import com.codoacodo.flysky.demo.model.entity.VueloEntity;
 import com.codoacodo.flysky.demo.repository.UsuarioRepository;
-import com.codoacodo.flysky.demo.repository.VueloRepository;
+import com.codoacodo.flysky.demo.service.VueloService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
 
+@SpringJUnitConfig
+@SpringBootTest
+@Transactional
+@ContextConfiguration(classes = {DemoApplication.class})
 public class VueloServiceTest {
+    @Autowired
+    private VueloService vueloService;
+
+    @BeforeEach
+    void setUp() {
+        // Realizar configuraciones adicionales si es necesario
+    }
 
     @Test
-    @DisplayName("US0001-ListaDeVuelosDisponibles")
-    void buscarVuelosOkTest() {
+    @DisplayName("Obtener vuelos disponibles - Éxito")
+    void obtenerVuelosDisponiblesExito() {
         // Arrange
-        VueloRepository vueloRepository = Mockito.mock(VueloRepository.class);
-        UsuarioRepository usuarioRepository = Mockito.mock(UsuarioRepository.class);
-        VueloService vueloService = new VueloServiceImpl(vueloRepository, usuarioRepository);
-
-        List<VueloEntity> vueloEntities = new ArrayList<>();
-        VueloEntity vueloEntity1 = new VueloEntity();
-        vueloEntity1.setDisponible(true);
-        vueloEntity1.setCapacidad(50);
-        vueloEntity1.setAerolinea("Aerolineas Argentinas");
-        vueloEntity1.setFechaHoraPartida((LocalDateTime.parse("2023-06-25T23:53:30")));
-        vueloEntity1.setFechaHoraPartida((LocalDateTime.parse("2023-06-25T23:53:30")));
-        vueloEntity1.setPrecio(15000.0);
-        vueloEntity1.setOrigen("Buenos Aires");
-        vueloEntity1.setDestino("Uruguay");
-        vueloEntities.add(vueloEntity1);
-
-        VueloEntity vueloEntity2 = new VueloEntity();
-        vueloEntity2.setDisponible(true);
-        vueloEntity2.setCapacidad(50);
-        vueloEntity2.setAerolinea("Aerolineas Uruguayas");
-        vueloEntity2.setFechaHoraPartida(LocalDateTime.parse("2023-06-25T23:53:30"));
-        vueloEntity2.setFechaHoraPartida((LocalDateTime.parse("2023-06-25T23:53:30")));
-        vueloEntity2.setPrecio(15000.0);
-        vueloEntity2.setOrigen("Buenos Aires");
-        vueloEntity2.setDestino("Uruguay");
-        vueloEntities.add(vueloEntity2);
-
-        when(usuarioRepository.getByNombreUsuario(anyString())).thenReturn(Optional.of(new UsuarioEntity()));
-        when(vueloRepository.findByDisponibleTrue()).thenReturn(vueloEntities);
+        String nombreUsuario = "Juan";
 
         // Act
-        List<VueloDTO> vuelosObtenidos = vueloService.obtenerVuelosDisponibles("Juan");
+        List<VueloDTO> vuelos = vueloService.obtenerVuelosDisponibles(nombreUsuario);
 
         // Assert
-        assertEquals(2, vuelosObtenidos.size());
-        assertEquals(vueloEntity1.getAerolinea(), vuelosObtenidos.get(0).getAerolinea());
-        assertEquals(vueloEntity2.getAerolinea(), vuelosObtenidos.get(1).getAerolinea());
+        assertEquals(2, vuelos.size());
 
-        verify(vueloRepository, times(1)).findByDisponibleTrue();
+        VueloDTO vuelo1 = vuelos.get(0);
+        assertEquals("Aerolineas Argentinas", vuelo1.getAerolinea());
+        assertEquals(3, vuelo1.getButacas().size());
+
+
+        VueloDTO vuelo2 = vuelos.get(1);
+        assertEquals("Aerolineas Uruguayas", vuelo2.getAerolinea());
+        assertEquals(0, vuelo2.getButacas().size());
     }
 }
