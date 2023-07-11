@@ -1,19 +1,20 @@
-package com.codoacodo.flysky.demo.service;
-
 import com.codoacodo.flysky.demo.dto.response.ReservaDTO;
 import com.codoacodo.flysky.demo.model.entity.ReservaEntity;
 import com.codoacodo.flysky.demo.model.entity.UsuarioEntity;
+import com.codoacodo.flysky.demo.model.entity.VueloEntity;
+import com.codoacodo.flysky.demo.model.enums.TipoPago;
 import com.codoacodo.flysky.demo.model.enums.TipoUsuario;
-
-import com.codoacodo.flysky.demo.repository.ButacaRepository;
-import com.codoacodo.flysky.demo.repository.ReservaRepository;
 import com.codoacodo.flysky.demo.repository.UsuarioRepository;
-import com.codoacodo.flysky.demo.repository.VueloRepository;
-import org.junit.jupiter.api.*;
-import org.mockito.Mockito;
+import com.codoacodo.flysky.demo.service.ClienteService;
+import com.codoacodo.flysky.demo.service.ClienteServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,21 +24,16 @@ import static org.mockito.Mockito.when;
 
 public class ClienteServiceTest {
     private ClienteService clienteService;
+
+    @Mock
     private UsuarioRepository usuarioRepository;
 
-  /*  public ClienteServiceTest(UsuarioRepository usuarioRepository,ClienteService clienteService) {
-        this.usuarioRepository = usuarioRepository;
-        this.clienteService = clienteService;
-    }*/
-
-
-      @BeforeEach
-   void setUp() {
+    @BeforeEach
+    void setUp() {
         MockitoAnnotations.openMocks(this);
-        usuarioRepository = Mockito.mock(UsuarioRepository.class);
-       clienteService = new ClienteServiceImpl(usuarioRepository);
+        clienteService = new ClienteServiceImpl(usuarioRepository);
     }
-//NO funciona
+
     @Test
     @DisplayName("Obtener reservas de cliente - Éxito")
     void obtenerReservasDeClienteExito() {
@@ -48,17 +44,48 @@ public class ClienteServiceTest {
         usuarioEntity.setTipoUsuario(TipoUsuario.AGENTE_DE_VENTAS);
         UsuarioEntity clienteEntity = new UsuarioEntity();
         List<ReservaEntity> reservaEntities = new ArrayList<>();
-        reservaEntities.add(new ReservaEntity());
+        ReservaEntity reserva1 = new ReservaEntity();
+        reserva1.setTipoPago(TipoPago.EFECTIVO);
+        reserva1.setMontoPago(1500.0);
+        reserva1.setFechaReserva(LocalDate.of(2023,6,25));
+        reserva1.setUsuario(clienteEntity);
+        reserva1.setVuelo(createVueloEntity());
+        reservaEntities.add(reserva1);
         clienteEntity.setReserva(reservaEntities);
         when(usuarioRepository.getByNombreUsuario(nombreUsuario)).thenReturn(Optional.of(usuarioEntity));
         when(usuarioRepository.getByNombreUsuario(nombreCliente)).thenReturn(Optional.of(clienteEntity));
 
         // Act
         List<ReservaDTO> reservas = clienteService.obtenerReservasDeCliente(nombreUsuario, nombreCliente);
-        System.out.println("reservaEntities.size() = " + reservaEntities.size());
-        System.out.println("reservas.size() = " + reservas.size());
-        System.out.println("Usuario"+reservas.get(0).getUsuario());
+
         // Assert
         assertEquals(reservaEntities.size(), reservas.size());
+        assertEquals(reserva1.getTipoPago(), reservas.get(0).getTipoPago());
+        assertEquals(reserva1.getMontoPago(), reservas.get(0).getMontoPago());
+        assertEquals(reserva1.getFechaReserva(), reservas.get(0).getFechaReserva());
+        assertEquals(reserva1.getUsuario().getNombreUsuario(), reservas.get(0).getUsuario().getNombreUsuario());
+        assertEquals(reserva1.getUsuario().getTelefono(), reservas.get(0).getUsuario().getTelefono());
+        assertEquals(reserva1.getVuelo().getButacas().size(), reservas.get(0).getVuelo().getButacas().size());
+        assertEquals(reserva1.getVuelo().getCapacidad(), reservas.get(0).getVuelo().getCapacidad());
+        assertEquals(reserva1.getVuelo().getAerolinea(), reservas.get(0).getVuelo().getAerolinea());
+        assertEquals(reserva1.getVuelo().getFechaHoraPartida(), reservas.get(0).getVuelo().getFechaHoraPartida());
+        assertEquals(reserva1.getVuelo().getFechaHoraLlegada(), reservas.get(0).getVuelo().getFechaHoraLlegada());
+        assertEquals(reserva1.getVuelo().getPrecio(), reservas.get(0).getVuelo().getPrecio());
+        assertEquals(reserva1.getVuelo().getOrigen(), reservas.get(0).getVuelo().getOrigen());
+        assertEquals(reserva1.getVuelo().getDestino(), reservas.get(0).getVuelo().getDestino());
+    }
+
+    private VueloEntity createVueloEntity() {
+        VueloEntity vueloEntity = new VueloEntity();
+        vueloEntity.setButacas(new ArrayList<>());
+        vueloEntity.setDisponible(false);
+        vueloEntity.setCapacidad(50);
+        vueloEntity.setAerolinea("Aerolineas Argentinas");
+        vueloEntity.setFechaHoraPartida(LocalDateTime.of(2023, 6, 25, 23, 53, 30));
+        vueloEntity.setFechaHoraLlegada(LocalDateTime.of(2023, 6, 25, 23, 53, 30));
+        vueloEntity.setPrecio(15000.0);
+        vueloEntity.setOrigen("Buenos Aires");
+        vueloEntity.setDestino("Uruguay");
+        return vueloEntity;
     }
 }
