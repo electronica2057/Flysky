@@ -1,7 +1,9 @@
 package com.codoacodo.flysky.demo.service;
 
 import com.codoacodo.flysky.demo.dto.response.VueloDTO;
+import com.codoacodo.flysky.demo.model.entity.UsuarioEntity;
 import com.codoacodo.flysky.demo.model.entity.VueloEntity;
+import com.codoacodo.flysky.demo.repository.UsuarioRepository;
 import com.codoacodo.flysky.demo.repository.VueloRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,6 +12,7 @@ import org.mockito.Mockito;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -20,9 +23,9 @@ public class VueloServiceTest {
     @DisplayName("US0001-ListaDeVuelosDisponibles")
     void buscarVuelosOkTest() {
         // Arrange
-        //5
         VueloRepository vueloRepository = Mockito.mock(VueloRepository.class);
-        VueloService vueloService = new VueloServiceImpl(vueloRepository);
+        UsuarioRepository usuarioRepository = Mockito.mock(UsuarioRepository.class);
+        VueloService vueloService = new VueloServiceImpl(vueloRepository, usuarioRepository);
 
         List<VueloEntity> vueloEntities = new ArrayList<>();
         VueloEntity vueloEntity1 = new VueloEntity();
@@ -47,16 +50,17 @@ public class VueloServiceTest {
         vueloEntity2.setDestino("Uruguay");
         vueloEntities.add(vueloEntity2);
 
+        when(usuarioRepository.getByNombreUsuario(anyString())).thenReturn(Optional.of(new UsuarioEntity()));
         when(vueloRepository.findByDisponibleTrue()).thenReturn(vueloEntities);
 
         // Act
-        List<VueloDTO> vuelosObtenidos = vueloService.obtenerVuelosDisponibles();
+        List<VueloDTO> vuelosObtenidos = vueloService.obtenerVuelosDisponibles("Juan");
 
         // Assert
         assertEquals(2, vuelosObtenidos.size());
         assertEquals(vueloEntity1.getAerolinea(), vuelosObtenidos.get(0).getAerolinea());
         assertEquals(vueloEntity2.getAerolinea(), vuelosObtenidos.get(1).getAerolinea());
 
-        //verify(vueloRepository, times(1)).findByDisponibleTrue();
+        verify(vueloRepository, times(1)).findByDisponibleTrue();
     }
 }
