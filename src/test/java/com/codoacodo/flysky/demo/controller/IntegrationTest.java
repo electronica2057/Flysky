@@ -38,7 +38,7 @@ public class IntegrationTest {
 
 
     @Test
-    @Disabled
+
     public void testReservas() throws Exception {
         List<ReservaDTO> reservas = new ArrayList<>();
 

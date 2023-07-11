@@ -105,7 +105,7 @@ public class ReservaServiceImpl implements ReservaService {
         reservaEntity.setFechaReserva(LocalDate.now());
         reservaEntity.setUsuario(usuario);
         reservaEntity.setVuelo(vueloAReservar);
-
+        reservaEntity.setButacaId(butacaAReservar.getId());
         reservaRepository.save(reservaEntity);
 
         ReservaVueloResponseDto reservaVueloResponseDto = new ReservaVueloResponseDto();

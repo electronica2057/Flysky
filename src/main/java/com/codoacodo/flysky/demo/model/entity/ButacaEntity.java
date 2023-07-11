@@ -23,4 +23,5 @@ public class ButacaEntity {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "vuelo_id", nullable = false)
     private VueloEntity vuelo;
+
 }

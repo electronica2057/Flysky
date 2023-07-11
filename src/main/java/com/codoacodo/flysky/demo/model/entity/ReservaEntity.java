@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.java.Log;
 
 import java.time.LocalDate;
 
@@ -33,6 +34,8 @@ public class ReservaEntity {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "vuelo_id", nullable = false)
     private VueloEntity vuelo;
+
+    private Long butacaId;
 
    /*
    @PrePersist
