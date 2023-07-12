@@ -15,7 +15,7 @@ VALUES (TRUE, 'AE04', 1),
        (TRUE, 'AE05', 1),
        (TRUE, 'AE06', 1),
        (TRUE, 'AE07', 1),
-       (TRUE, 'AE08', 1);;
+       (TRUE, 'AE08', 1);
 
 INSERT INTO reserva(tipo_pago, usuario_id, vuelo_id, monto_pago, fecha_reserva, butaca_id)
 VALUES ('TARJETA_CREDITO', 1, 1, 1500, '2023-06-25', 1),
