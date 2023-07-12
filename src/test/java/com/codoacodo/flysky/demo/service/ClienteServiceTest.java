@@ -1,12 +1,12 @@
-import com.codoacodo.flysky.demo.dto.response.ReservaDTO;
+package com.codoacodo.flysky.demo.service;
+
+import com.codoacodo.flysky.demo.dto.response.ReservaClienteDTO;
 import com.codoacodo.flysky.demo.model.entity.ReservaEntity;
 import com.codoacodo.flysky.demo.model.entity.UsuarioEntity;
 import com.codoacodo.flysky.demo.model.entity.VueloEntity;
 import com.codoacodo.flysky.demo.model.enums.TipoPago;
 import com.codoacodo.flysky.demo.model.enums.TipoUsuario;
 import com.codoacodo.flysky.demo.repository.UsuarioRepository;
-import com.codoacodo.flysky.demo.service.ClienteService;
-import com.codoacodo.flysky.demo.service.ClienteServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,16 +56,13 @@ public class ClienteServiceTest {
         when(usuarioRepository.getByNombreUsuario(nombreCliente)).thenReturn(Optional.of(clienteEntity));
 
         // Act
-        List<ReservaDTO> reservas = clienteService.obtenerReservasDeCliente(nombreUsuario, nombreCliente);
+        List<ReservaClienteDTO> reservas = clienteService.obtenerReservasDeCliente(nombreUsuario, nombreCliente);
 
         // Assert
         assertEquals(reservaEntities.size(), reservas.size());
         assertEquals(reserva1.getTipoPago(), reservas.get(0).getTipoPago());
         assertEquals(reserva1.getMontoPago(), reservas.get(0).getMontoPago());
         assertEquals(reserva1.getFechaReserva(), reservas.get(0).getFechaReserva());
-        assertEquals(reserva1.getUsuario().getNombreUsuario(), reservas.get(0).getUsuario().getNombreUsuario());
-        assertEquals(reserva1.getUsuario().getTelefono(), reservas.get(0).getUsuario().getTelefono());
-        assertEquals(reserva1.getVuelo().getButacas().size(), reservas.get(0).getVuelo().getButacas().size());
         assertEquals(reserva1.getVuelo().getCapacidad(), reservas.get(0).getVuelo().getCapacidad());
         assertEquals(reserva1.getVuelo().getAerolinea(), reservas.get(0).getVuelo().getAerolinea());
         assertEquals(reserva1.getVuelo().getFechaHoraPartida(), reservas.get(0).getVuelo().getFechaHoraPartida());
