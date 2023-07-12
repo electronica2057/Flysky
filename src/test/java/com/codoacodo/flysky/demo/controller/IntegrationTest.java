@@ -1,14 +1,10 @@
 package com.codoacodo.flysky.demo.controller;
 
-import com.codoacodo.flysky.demo.dto.response.ButacaDTO;
-import com.codoacodo.flysky.demo.dto.response.ReservaDTO;
-import com.codoacodo.flysky.demo.dto.response.UsuarioDTO;
-import com.codoacodo.flysky.demo.dto.response.VueloDTO;
+import com.codoacodo.flysky.demo.dto.response.*;
 import com.codoacodo.flysky.demo.model.enums.TipoPago;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -39,14 +35,33 @@ public class IntegrationTest {
 
     @Test
     public void testReservas() throws Exception {
-        List<ReservaDTO> reservas = new ArrayList<>();
+        List<ReservaClienteDTO> reservas = new ArrayList<>();
 
-        ReservaDTO testPostDto= new ReservaDTO(TipoPago.TARJETA_CREDITO,1500.00, LocalDate.of(2023,6,25),new UsuarioDTO("Miguel", 156453),new VueloDTO(List.of(new ButacaDTO(true, "AE04"), new ButacaDTO(true, "AE05"), new ButacaDTO(true, "AE06")), true, 50, "Aerolineas Argentinas", LocalDateTime.of(2023, 6, 25, 23, 53, 30), LocalDateTime.of(2023, 6, 25, 23, 53, 30), 15000.0, "Buenos Aires", "Uruguay"));
-        ReservaDTO testPostDto2= new ReservaDTO(TipoPago.TRANSFERENCIA_BANCARIA,2000.00, LocalDate.of(2023,6,29),new UsuarioDTO("Miguel", 156453),new VueloDTO (List.of(), false, 50, "Aerolineas Argentinas", LocalDateTime.of(2023, 6, 25, 23, 53, 30), LocalDateTime.of(2023, 6, 25, 23, 53, 30), 15000.0, "Buenos Aires", "Uruguay"));
-        ReservaDTO testPostDto3= new ReservaDTO(TipoPago.EFECTIVO,3000.00, LocalDate.of(2023,6,29),new UsuarioDTO("Miguel", 156453),new VueloDTO (List.of(), false, 50, "Aerolineas Argentinas", LocalDateTime.of(2023, 6, 25, 23, 53, 30), LocalDateTime.of(2023, 6, 25, 23, 53, 30), 15000.0, "Buenos Aires", "Uruguay"));
-        reservas.add(testPostDto);
-        reservas.add(testPostDto2);
-        reservas.add(testPostDto3);
+        ReservaClienteDTO testReserva1 = new ReservaClienteDTO(
+                TipoPago.TARJETA_CREDITO,
+                1500D,
+                LocalDate.of(2023,6,25),
+                new com.codoacodo.flysky.demo.dto.VueloDTO(true, 50,"Aerolineas Argentinas", LocalDateTime.of(2023, 6, 25, 23, 53, 30),LocalDateTime.of(2023, 6, 25, 23, 53, 30), 15000.0, "Buenos Aires", "Uruguay"),
+                new ButacaDTO(true, "AE04")
+                );
+        ReservaClienteDTO testReserva2 = new ReservaClienteDTO(
+                TipoPago.TRANSFERENCIA_BANCARIA,
+                2000D,
+                LocalDate.of(2023,6,29),
+                new com.codoacodo.flysky.demo.dto.VueloDTO(false, 50, "Aerolineas Argentinas", LocalDateTime.of(2023, 6, 25, 23, 53, 30), LocalDateTime.of(2023, 6, 25, 23, 53, 30), 15000.0, "Buenos Aires", "Uruguay"),
+                new ButacaDTO(true, "AE05")
+        );
+        ReservaClienteDTO testReserva3 = new ReservaClienteDTO(
+                TipoPago.EFECTIVO,
+                3000D,
+                LocalDate.of(2023,6,29),
+                new com.codoacodo.flysky.demo.dto.VueloDTO(false, 50, "Aerolineas Argentinas", LocalDateTime.of(2023, 6, 25, 23, 53, 30), LocalDateTime.of(2023, 6, 25, 23, 53, 30), 15000.0, "Buenos Aires", "Uruguay"),
+                new ButacaDTO(true, "AE06")
+        );
+
+        reservas.add(testReserva1);
+        reservas.add(testReserva2);
+        reservas.add(testReserva3);
 
         ObjectMapper writer = new ObjectMapper()
                 .registerModule(new JavaTimeModule())
