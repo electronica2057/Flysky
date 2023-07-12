@@ -42,21 +42,21 @@ public class IntegrationTest {
                 1500D,
                 LocalDate.of(2023,6,25),
                 new com.codoacodo.flysky.demo.dto.VueloDTO(true, 50,"Aerolineas Argentinas", LocalDateTime.of(2023, 6, 25, 23, 53, 30),LocalDateTime.of(2023, 6, 25, 23, 53, 30), 15000.0, "Buenos Aires", "Uruguay"),
-                new ButacaDTO(true, "AE04")
+                new ButacaDTO(false, "AE04")
                 );
         ReservaClienteDTO testReserva2 = new ReservaClienteDTO(
                 TipoPago.TRANSFERENCIA_BANCARIA,
                 2000D,
                 LocalDate.of(2023,6,29),
                 new com.codoacodo.flysky.demo.dto.VueloDTO(false, 50, "Aerolineas Argentinas", LocalDateTime.of(2023, 6, 25, 23, 53, 30), LocalDateTime.of(2023, 6, 25, 23, 53, 30), 15000.0, "Buenos Aires", "Uruguay"),
-                new ButacaDTO(true, "AE05")
+                new ButacaDTO(false, "AE05")
         );
         ReservaClienteDTO testReserva3 = new ReservaClienteDTO(
                 TipoPago.EFECTIVO,
                 3000D,
                 LocalDate.of(2023,6,29),
                 new com.codoacodo.flysky.demo.dto.VueloDTO(false, 50, "Aerolineas Argentinas", LocalDateTime.of(2023, 6, 25, 23, 53, 30), LocalDateTime.of(2023, 6, 25, 23, 53, 30), 15000.0, "Buenos Aires", "Uruguay"),
-                new ButacaDTO(true, "AE06")
+                new ButacaDTO(false, "AE06")
         );
 
         reservas.add(testReserva1);

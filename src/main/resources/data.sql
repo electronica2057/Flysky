@@ -11,10 +11,10 @@ VALUES (TRUE,50,'Aerolineas Argentinas','2023-06-25 23:53:30','2023-06-25 23:53:
        (TRUE,50,'Aerolineas Uruguayas','2023-06-25 23:53:30','2023-06-25 23:53:30', 15000, 'Buenos Aires', 'Uruguay');
 
 INSERT INTO butaca(disponible, posicion, vuelo_id)
-VALUES (TRUE, 'AE04', 1),
-       (TRUE, 'AE05', 1),
-       (TRUE, 'AE06', 1),
-       (TRUE, 'AE07', 1),
+VALUES (FALSE, 'AE04', 1),
+       (FALSE, 'AE05', 1),
+       (FALSE, 'AE06', 1),
+       (FALSE, 'AE07', 1),
        (TRUE, 'AE08', 1);
 
 INSERT INTO reserva(tipo_pago, usuario_id, vuelo_id, monto_pago, fecha_reserva, butaca_id)

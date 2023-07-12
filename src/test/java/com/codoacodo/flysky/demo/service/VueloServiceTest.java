@@ -43,7 +43,7 @@ public class VueloServiceTest {
 
         VueloDTO vuelo1 = vuelos.get(0);
         assertEquals("Aerolineas Argentinas", vuelo1.getAerolinea());
-        assertEquals(3, vuelo1.getButacas().size());
+        assertEquals(5, vuelo1.getButacas().size());
 
 
         VueloDTO vuelo2 = vuelos.get(1);
