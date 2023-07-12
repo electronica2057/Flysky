@@ -1,6 +1,5 @@
 package com.codoacodo.flysky.demo.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,8 +16,11 @@ public class ButacaEntity {
     private Long id;
 
     private Boolean disponible = true;
-    //A3, B34 etc posicion del asiento
+
     private String posicion;
+
+    @OneToOne(mappedBy = "butaca")
+    private ReservaEntity reserva;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "vuelo_id", nullable = false)

@@ -1,7 +1,6 @@
 package com.codoacodo.flysky.demo.model.entity;
 
 import com.codoacodo.flysky.demo.model.enums.TipoPago;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +25,10 @@ public class ReservaEntity {
 
     private LocalDate fechaReserva;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "butaca_id", nullable = false)
+    private ButacaEntity butaca;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "usuario_id", nullable = false)
     private UsuarioEntity usuario;
@@ -34,10 +37,4 @@ public class ReservaEntity {
     @JoinColumn(name = "vuelo_id", nullable = false)
     private VueloEntity vuelo;
 
-   /*
-   @PrePersist
-   public void prePersist() {
-       fechaReserva = LocalDate.now();
-   }
-   */
 }

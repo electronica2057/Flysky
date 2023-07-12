@@ -1,6 +1,7 @@
 package com.codoacodo.flysky.demo.service;
 
 
+import com.codoacodo.flysky.demo.dto.response.ReservaClienteDTO;
 import com.codoacodo.flysky.demo.dto.response.ReservaDTO;
 import com.codoacodo.flysky.demo.exception.EntityNotFoundException;
 import com.codoacodo.flysky.demo.exception.UnAuthorizedException;
@@ -23,7 +24,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public List<ReservaDTO> obtenerReservasDeCliente(String nombreUsuario, String nombreCliente) {
+    public List<ReservaClienteDTO> obtenerReservasDeCliente(String nombreUsuario, String nombreCliente) {
         Optional<UsuarioEntity> usuarioEntity = usuarioRepository.getByNombreUsuario(nombreUsuario);
 
         if (usuarioEntity.isEmpty()) {
@@ -50,6 +51,6 @@ public class ClienteServiceImpl implements ClienteService {
 
         ModelMapper mapper = new ModelMapper();
 
-        return reservaEntities.stream().map(reservaEntity -> mapper.map(reservaEntity, ReservaDTO.class)).toList();
+        return reservaEntities.stream().map(reservaEntity -> mapper.map(reservaEntity, ReservaClienteDTO.class)).toList();
     }
 }
