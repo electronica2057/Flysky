@@ -81,6 +81,16 @@ public class IntegrationTest {
         System.out.println(mvcResult.getResponse().getContentAsString());
     }
 
+    @Test
+    void validacionVuelosDisponibles() throws Exception {
+        mockMvc.perform(get("/api/v1/vuelos/disponibles")
+                        .param("nombreUsuario", "Juan"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].aerolinea").value("Aerolineas Argentinas"));
+    }
+
+
 
 
 
