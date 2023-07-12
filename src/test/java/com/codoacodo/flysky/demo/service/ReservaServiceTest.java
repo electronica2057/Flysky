@@ -28,7 +28,7 @@ public class ReservaServiceTest {
         //arrange
         ReservaVueloDTO reservaVueloDTO = new ReservaVueloDTO("Aerolineas Argentinas", LocalDateTime.of(2023, 6, 25, 23, 53, 30), LocalDateTime.of(2023, 6, 25, 23, 53, 30), "Buenos Aires", "Uruguay", "AE04", TipoPago.EFECTIVO);
         //ReservaVueloDTO expected2 = new ReservaVueloDTO("Aerolineas Argentinas", LocalDateTime.of(2023, 6, 25, 23, 53, 30), LocalDateTime.of(2023, 6, 25, 23, 53, 30), "Buenos Aires", "Uruguay", "AE04", TipoPago.EFECTIVO);
-        ReservaVueloResponseDto expected = new ReservaVueloResponseDto("Miguel","Aerolineas Argentinas",LocalDateTime.of(2023, 6, 25, 23, 53, 30),LocalDateTime.of(2023, 6, 25, 23, 53, 30),"Buenos Aires","Uruguay","AE04",TipoPago.EFECTIVO,13500.00, LocalDate.of(2023,7,11));
+        ReservaVueloResponseDto expected = new ReservaVueloResponseDto("Miguel","Aerolineas Argentinas",LocalDateTime.of(2023, 6, 25, 23, 53, 30),LocalDateTime.of(2023, 6, 25, 23, 53, 30),"Buenos Aires","Uruguay","AE04",TipoPago.EFECTIVO,13500.00, LocalDate.of(2023,7,12));
         //act
         ReservaVueloResponseDto act = reservaService.reservarVuelo("Miguel", reservaVueloDTO);
 
